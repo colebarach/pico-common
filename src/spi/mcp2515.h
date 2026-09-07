@@ -7,17 +7,17 @@
 
 // TODO(Barach):
 // - Input validation (overflow)
-// - Implemented the ANY buffers
+// - Implemente the ANY buffers
 
 // Includes -------------------------------------------------------------------------------------------------------------------
 
 // RPi Pico SDK
 #include "hardware/spi.h"
 #include "pico/mutex.h"
-#include "pico/sem.h"
 
 // Constants ------------------------------------------------------------------------------------------------------------------
 
+// TODO(Barach): Not implemented
 #define MCP2515_TIMEOUT_NONBLOCKING		((unsigned int) 0)
 #define MCP2515_TIMEOUT_BLOCKING		((unsigned int) -1)
 
