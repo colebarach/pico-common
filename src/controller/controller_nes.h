@@ -49,6 +49,9 @@
 //
 //   The CD4021 may be powered by any voltage in the range of [3V, 15V], in this case 3.3V was chosen for convenience.
 //
+//   A pull-up resistor for the serial data pin is not be required for a connected controller, but is for an unconnected
+//   controller.
+//
 // References:
 // - https://www.allaboutcircuits.com/projects/nes-controller-interface-with-an-arduino-uno/
 
@@ -59,22 +62,25 @@
 
 // Datatypes ------------------------------------------------------------------------------------------------------------------
 
-typedef struct controllerNesConfig
+typedef struct
 {
-	/// @brief The GPIO pin tied to the serial data pin. Initialized and configured as an input with software pull up.
-	uint32_t pinSerialData;
+	/// @brief The GPIO pin tied to the serial clock pin. Initialized and configured as an output. Can be shared with other
+	/// controllers.
+	unsigned int pinSerialClock;
 
-	/// @brief The GPIO pin tied to the serial clock pin. Initialized and configured as an output.
-	uint32_t pinSerialClock;
+	/// @brief The GPIO pin tied to the serial latch pin. Initialized and configured as an output. Can be shared with other
+	/// controllers.
+	unsigned int pinSerialLatch;
 
-	/// @brief The GPIO pin tied to the serial latch pin. Initialized and configured as an output.
-	uint32_t pinSerialLatch;
+	/// @brief The GPIO pin tied to the serial data pin. Initialized and configured as an input with software pull up. Cannot
+	/// be shared with other controllers.
+	unsigned int pinSerialData;
 
 	/// @brief The period to pulse the clock line at, in microseconds. For example, 40 => 25 kHz.
-	uint32_t clockPeriod;
+	uint32_t clockPeriodUs;
 } controllerNesConfig_t;
 
-typedef struct controllerNes
+typedef struct
 {
 	controllerVmt_t vmt;
 	const controllerNesConfig_t* config;
