@@ -43,7 +43,7 @@ void controllerNesInit (controllerNes_t* controller, const controllerNesConfig_t
 
 	// Default to no input
 	// - Pull-up resistor is not be required for a connected controller, but is for an unconnected controller.
-	gpio_pull_up (nes->config.pinSerialData);
+	gpio_pull_up (controller->config->pinSerialData);
 }
 
 void controllerNesRead (void* controller)
