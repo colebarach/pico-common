@@ -1,12 +1,10 @@
-#ifndef CONTROLLER_NES_H
-#define CONTROLLER_NES_H
+#ifndef GAMEPAD_NES_H
+#define GAMEPAD_NES_H
 
-// NES Controller -------------------------------------------------------------------------------------------------------------
+// NES Gamepad ----------------------------------------------------------------------------------------------------------------
 //
 // Author: Cole Barach
 // Date Created: 2023.12.01
-//
-// TODO(Barach): How to make polymorphic without overhead?
 //
 // Description: Bit-banging implementation of an interface for the Nintendo Entertainment System controllers. Each controller
 //   has 8 buttons. The controllers use a modified version of SPI to communicate, acting as a secondary device. The layout of
@@ -58,7 +56,7 @@
 // Includes -------------------------------------------------------------------------------------------------------------------
 
 // Includes
-#include "controller.h"
+#include "gamepad.h"
 
 // Datatypes ------------------------------------------------------------------------------------------------------------------
 
@@ -78,24 +76,24 @@ typedef struct
 
 	/// @brief The period to pulse the clock line at, in microseconds. For example, 40 => 25 kHz.
 	uint32_t clockPeriodUs;
-} controllerNesConfig_t;
+} nesConfig_t;
 
 typedef struct
 {
-	controllerVmt_t vmt;
-	const controllerNesConfig_t* config;
-	uint8_t buttonsPressed;
-	uint8_t buttonsHeld;
-} controllerNes_t;
+	gamepadVmt_t vmt;
+	const nesConfig_t* config;
+	uint8_t buttonsCurrent;
+	uint8_t buttonsPrevious;
+} nes_t;
 
 // Functions ------------------------------------------------------------------------------------------------------------------
 
-void controllerNesInit (controllerNes_t* controller, const controllerNesConfig_t* config);
+void nesInit (nes_t* pad, const nesConfig_t* config);
 
-void controllerNesRead (void* controller);
+void nesRead (void* pad);
 
-bool controllerNesButtonPressed (void* controller, controllerButton_t button);
+gamepadButtonState_t nesGetButtonState (void* pad, gamepadButton_t button);
 
-bool controllerNesButtonHeld (void* controller, controllerButton_t button);
+gamepadButtonEdge_t nesGetButtonEdge (void* pad, gamepadButton_t button);
 
-#endif // CONTROLLER_NES_H
+#endif // GAMEPAD_NES_H
